@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GoogleInterviewQuestionFour
 {
@@ -24,36 +25,25 @@ namespace GoogleInterviewQuestionFour
             Console.WriteLine("Expected: apple");
             Console.WriteLine("Result: " + response);
 
-            string GetLongestWordSubsequence(string s, string[] d)
-            {            
-                HashSet<string> set = new HashSet<string>(d);
-                List<string> list = new List<string>();
-                generate(s, "", 0, list);
-                string max_str = "";
-                foreach(string str in list)
+            string GetLongestWordSubsequence(string s, IList<string> d)
+            {
+                var sorted = d.OrderByDescending(x => x.Length).ThenBy(x => x);
+                foreach (string str in sorted)
                 {
-                    if (set.Contains(str))
+                    int i = 0;
+                    for (int j = 0; j < s.Length; j++)
                     {
-                        if (str.Length > max_str.Length || (str.Length == max_str.Length && str.CompareTo(max_str) < 0))
-                        {
-                            max_str = str;
-                        }
-                            
-                    }                        
+                        if (s[j] == str[i])
+                            i++;
+
+                        if (i == str.Length)
+                            return str;
+                    }
                 }
-                return max_str;
+
+                return "";
             }
 
-            void generate(string s, string str, int i, List<string> l)
-            {
-                if (i == s.Length)
-                    l.Add(str);
-                else
-                {
-                    generate(s, str + s[i], i + 1, l);
-                    generate(s, str, i + 1, l);
-                }
-            }
 
         }
     }
