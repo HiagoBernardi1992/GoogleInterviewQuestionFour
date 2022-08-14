@@ -27,15 +27,23 @@ namespace GoogleInterviewQuestionFour
 
             string GetLongestWordSubsequence(string s, IList<string> d)
             {
+                //First I sort the list so that I can sure that I always work with the higher string first
                 var sorted = d.OrderByDescending(x => x.Length).ThenBy(x => x);
+                //I do a loop to check one by one
                 foreach (string str in sorted)
                 {
+                    //here is one variable to interate at the char of the string sorted
                     int i = 0;
+                    //and here I do a loop to interate at the string to check
                     for (int j = 0; j < s.Length; j++)
                     {
+                        //if is equals means that the word sorted of the inteartion is in the sequence of the srting to check
                         if (s[j] == str[i])
                             i++;
 
+                        // here I compare the interation of the string sorted with the size of the string to check
+                        // if is equal it means that all the characters if the sorted string is in the sequence of the string to check
+                        // and I know that this string is the higher one, because I have done the sorted.
                         if (i == str.Length)
                             return str;
                     }
